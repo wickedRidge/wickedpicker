@@ -461,7 +461,7 @@
         handleTimeAdjustments: function (element) {
             var timeOut = 0;
             //Click and click and hold timepicker incrementer and decrementer
-            $(this.up).add(this.down).off('mousedown click touchstart').on('mousedown click mouseleave', {
+            $(this.up).add(this.down).off('mousedown mouseleave click touchstart').on('mousedown click mouseleave', {
                 'Wickedpicker': this,
                 'input': element
             }, function (event) {
