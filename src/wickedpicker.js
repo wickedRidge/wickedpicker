@@ -234,7 +234,7 @@
                     //Clicking the X
                     if ($(event.target).is(self.close)) {
                       self.hideTimepicker(window.lastTimePickerControl);
-                    } else if ($(event.target).closest(self.timepicker).length || $(event.target).closest($('.hasWickedpicker')).length) { //Clicking the Wickedpicker or one of it's inputs
+                    } else if ($(event.target).closest(self.timepicker).length || $(event.target).closest($('.hasWickedpicker[aria-showingpicker="true"]')).length) { //Clicking the Wickedpicker or one of it's inputs
                       event.stopPropagation();
                     } else {   //Everything else
                       if (typeof self.options.onClickOutside === 'function') {
