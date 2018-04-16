@@ -104,9 +104,8 @@
             var timepickerPos = $(element).offset();
 
             $(element).attr({'aria-showingpicker': 'true', 'tabindex': -1});
-            // this.setText(element);
             this.showHideMeridiemControl();
-            if (this.getText(element) !== this.getTime()) {
+            if (this.getText(element) !== this.getTime() && this.getText(element).length > 0) {
 
                 // Check meridiem 
                 var text = this.getText(element);
@@ -133,7 +132,8 @@
             if (typeof this.options.show === 'function') {
                 this.options.show(element, this.timepicker);
             }
-
+            
+            this.setText(element);
             this.handleTimeAdjustments(element);
         },
 
