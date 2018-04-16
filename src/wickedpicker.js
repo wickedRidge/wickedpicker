@@ -97,15 +97,15 @@
         showPicker: function (element) {
             //If there is a beforeShow function, then call it with the input calling the timepicker and the
             // timepicker itself
+            $(element).addClass('onPicker');
             if (typeof this.options.beforeShow === 'function') {
                 this.options.beforeShow(element, this.timepicker);
             }
             var timepickerPos = $(element).offset();
 
             $(element).attr({'aria-showingpicker': 'true', 'tabindex': -1});
-            this.setText(element);
             this.showHideMeridiemControl();
-            if (this.getText(element) !== this.getTime()) {
+            if (this.getText(element) !== this.getTime() && this.getText(element).length > 0) {
 
                 // Check meridiem 
                 var text = this.getText(element);
@@ -132,7 +132,8 @@
             if (typeof this.options.show === 'function') {
                 this.options.show(element, this.timepicker);
             }
-
+            
+            this.setText(element);
             this.handleTimeAdjustments(element);
         },
 
@@ -144,6 +145,7 @@
          * BeinnLora: added trigger function to call on closing/hiding timepicker. 
          */
         hideTimepicker: function (element) {
+            $('.onPicker').removeClass('onPicker');
             this.timepicker.hide();
             if (typeof this.options.afterShow === 'function') {
                 this.options.afterShow(element, this.timepicker);
@@ -234,9 +236,12 @@
                     //Clicking the X
                     if ($(event.target).is(self.close)) {
                       self.hideTimepicker(window.lastTimePickerControl);
-                    } else if ($(event.target).closest(self.timepicker).length || $(event.target).closest($('.hasWickedpicker')).length) { //Clicking the Wickedpicker or one of it's inputs
+                    } else if ($(event.target).closest(self.timepicker).length || $(event.target).closest($('.hasWickedpicker')).hasClass('onPicker')) { //Clicking the Wickedpicker or one of it's inputs
                       event.stopPropagation();
-                    } else {   //Everything else
+                    }else if ($(event.target).closest($('.hasWickedpicker')).length) {
+                        self.hideTimepicker(window.lastTimePickerControl);
+                        self.showPicker($(event.target).closest($('.hasWickedpicker')));
+                    }else {   //Everything else
                       if (typeof self.options.onClickOutside === 'function') {
                         self.options.onClickOutside();
                       }
