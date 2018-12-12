@@ -104,6 +104,7 @@
 
             $(element).attr({'aria-showingpicker': 'true', 'tabindex': -1});
             this.setText(element);
+            this.showHideSecondsControl();
             this.showHideMeridiemControl();
             if (this.getText(element) !== this.getTime()) {
 
@@ -171,9 +172,7 @@
         createPicker: function () {
             if ($('.wickedpicker').length === 0) {
                 var picker = '<div class="wickedpicker"><p class="wickedpicker__title">' + this.options.title + '<span class="wickedpicker__close"></span></p><ul class="wickedpicker__controls"><li class="wickedpicker__controls__control"><span class="' + this.options.upArrow + '"></span><span class="wickedpicker__controls__control--hours" tabindex="-1">00</span><span class="' + this.options.downArrow + '"></span></li><li class="wickedpicker__controls__control--separator"><span class="wickedpicker__controls__control--separator-inner">:</span></li><li class="wickedpicker__controls__control"><span class="' + this.options.upArrow + '"></span><span class="wickedpicker__controls__control--minutes" tabindex="-1">00</span><span class="' + this.options.downArrow + '"></span></li>';
-                if (this.options.showSeconds) {
-                    picker += '<li class="wickedpicker__controls__control--separator"><span class="wickedpicker__controls__control--separator-inner">:</span></li><li class="wickedpicker__controls__control"><span class="' + this.options.upArrow + '"></span><span class="wickedpicker__controls__control--seconds" tabindex="-1">00</span><span class="' + this.options.downArrow + '"></span> </li>';
-                }
+                picker += '<li class="wickedpicker__controls__control--separator"><span class="wickedpicker__controls__control--separator-inner">:</span></li><li class="wickedpicker__controls__control"><span class="' + this.options.upArrow + '"></span><span class="wickedpicker__controls__control--seconds" tabindex="-1">00</span><span class="' + this.options.downArrow + '"></span> </li>';
                 picker += '<li class="wickedpicker__controls__control"><span class="' + this.options.upArrow + '"></span><span class="wickedpicker__controls__control--meridiem" tabindex="-1">AM</span><span class="' + this.options.downArrow + '"></span></li></ul></div>';
                 $('body').append(picker);
                 this.attachKeyboardEvents();
@@ -198,9 +197,11 @@
         showHideSecondsControl: function () {
             if (this.options.showSeconds) {
                 $(this.secondsElem).parent().show();
+                $(this.secondsElem).parent().prev('.wickedpicker__controls__control--separator').show()
             }
             else {
                 $(this.secondsElem).parent().hide();
+                $(this.secondsElem).parent().prev('.wickedpicker__controls__control--separator').hide();
             }
         },
 
